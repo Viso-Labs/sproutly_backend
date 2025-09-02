@@ -12,6 +12,7 @@ const SECRET = "YOUR_SECRET_KEY"; // Use a secure key for signing
 // Dummy base template path
 // Function to generate and sign ID
 
+
 app.get("/og/u/:signedId.png", async (req, res) => {
   const { signedId } = req.params;
 
@@ -21,7 +22,6 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     const imageid = parts[1];
 
     const baseTemplatePath = path.join(__dirname, `/image/soulbond${imageid}.jpg`);
-
     const avatarUrl =
       `https://pbs.twimg.com/profile_images/${userid}/WiBev5T4_400x400.jpg`;
 
@@ -30,11 +30,33 @@ app.get("/og/u/:signedId.png", async (req, res) => {
       responseType: "arraybuffer",
     });
     const avatarBuffer = Buffer.from(avatarResponse.data, "binary");
+    // const userTwitterToken =
+    //   "AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ";
+
+    // let userResponse;
+    // try {
+    //   userResponse = await axios.get(`https://api.twitter.com/2/users/${userid}?user.fields=profile_image_url`, {
+    //     headers: { Authorization: `Bearer ${userTwitterToken}` },
+    //   });
+    // } catch (error) {
+    //   if (error.response && error.response.status === 429) {
+    //     const retryAfter = error.response.headers["retry-after"] || 60; // fallback 60 seconds
+    //     return res.status(429).send(`Rate limited by Twitter API. Please try again after ${retryAfter} seconds.`);
+    //   } else {
+    //     throw error;
+    //   }
+    // }
+
+    // const avatarUrl = userResponse.data.data.profile_image_url.replace("_normal", "_400x400");
+
+    // // Fetch avatar image
+    // const avatarResponse = await axios.get(avatarUrl, { responseType: "arraybuffer" });
+    // const avatarBuffer = Buffer.from(avatarResponse.data, "binary");
 
     // Load base template
     const baseImage = sharp(baseTemplatePath);
 
-    // Resize and mask avatar to circle ~ 128px
+    // Resize and mask avatar to circle ~ 220px
     const circleAvatar = await sharp(avatarBuffer)
       .resize(220, 220)
       .composite([
@@ -53,11 +75,6 @@ app.get("/og/u/:signedId.png", async (req, res) => {
           input: circleAvatar,
           gravity: "southeast",
           blend: "over",
-          // padding can be controlled by positioning if needed
-          top: null,
-          left: null,
-          // offset padding example (20px)
-          gravity: "southeast",
           top: 735,
           left: 110,
         },
@@ -73,6 +90,5 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     res.status(500).send("Error generating image");
   }
 });
-
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
