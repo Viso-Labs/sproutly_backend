@@ -1,0 +1,27 @@
+{
+  "name": "sproutly_back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server",
+    "test": "jest"
+  },
+  "author": "kalistan",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@superfaceai/passport-twitter-oauth2": "^1.2.4",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10",
+    "passport": "^0.7.0",
+    "passport-twitter": "^1.0.4",
+    "sharp": "^0.34.3",
+    "twitter-api-v2": "^1.25.0"
+  }
+}
