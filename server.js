@@ -22,22 +22,15 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     const userid = parts[0];
     const imageid = parts[1];
 
-    const baseTemplatePath = path.join(__dirname, `/image/soulbond${imageid}.jpg`);
-    // const avatarUrl =
-    //   `https://pbs.twimg.com/profile_images/${userid}/WiBev5T4_400x400.jpg`;
+    const baseTemplatePath = path.join(__dirname, `/image/soulbond${1}.jpg`);
 
-    // Fetch avatar image
-    // const avatarResponse = await axios.get(avatarUrl, {
-    //   responseType: "arraybuffer",
-    // });
-    // const avatarBuffer = Buffer.from(avatarResponse.data, "binary");
     const userTwitterToken =
       "AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ";
 
     let userResponse;
     try {
-      userResponse = await axios.get(`https://api.twitter.com/2/users/${userid}?user.fields=profile_image_url`, {
-        headers: { Authorization: `Bearer ${userTwitterToken}` },
+      userResponse = await axios.get(`https://api.x.com/2/users?user.fields=profile_image_url&ids=1120065922092417025`, {
+        headers: { Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ` },
       });
     } catch (error) {
       if (error.response && error.response.status === 429) {
