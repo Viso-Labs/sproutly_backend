@@ -30,7 +30,7 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     let userResponse;
     try {
       userResponse = await axios.get(`https://api.x.com/2/users?user.fields=profile_image_url&ids=${userid}`, {
-        headers: { Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ` },
+        headers: { Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAPHH3wEAAAAAAvyFKPSHTV5OcyP52oRf%2BaOrigQ%3DIe8xBhVcXopPZXVkC5xymkjUksZahfCrISXhw31EVTSeqzNCGR` },
       });
     } catch (error) {
       if (error.response && error.response.status === 429) {
