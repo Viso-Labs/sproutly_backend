@@ -91,5 +91,8 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     res.status(500).send("Error generating image");
   }
 });
+app.get("/", (req, res) => {
+  res.status(200).send("API is running.");
+});
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
