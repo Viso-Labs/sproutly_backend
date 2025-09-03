@@ -25,7 +25,7 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     const baseTemplatePath = path.join(__dirname, `/image/soulbond${imageid}.jpg`);
 
     const userTwitterToken =
-      "AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ";
+      "AAAAAAAAAAAAAAAAAAAAAPHH3wEAAAAAAvyFKPSHTV5OcyP52oRf%2BaOrigQ%3DIe8xBhVcXopPZXVkC5xymkjUksZahfCrISXhw31EVTSeqzNCGR";
 
     let userResponse;
     try {
@@ -35,7 +35,7 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     } catch (error) {
       if (error.response && error.response.status === 429) {
         const retryAfter = error.response.headers["retry-after"] || 60; // fallback 60 seconds
-        return res.status(429).send({error});
+        return res.status(429).send(`Rate limited by Twitter API. Please try again after ${retryAfter} seconds.`);
       } else {
         throw error;
       }
