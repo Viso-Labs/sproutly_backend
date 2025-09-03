@@ -22,20 +22,20 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     const userid = parts[0];
     const imageid = parts[1];
 
-    const baseTemplatePath = path.join(__dirname, `/image/soulbond${1}.jpg`);
+    const baseTemplatePath = path.join(__dirname, `/image/soulbond${imageid}.jpg`);
 
     const userTwitterToken =
       "AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ";
 
     let userResponse;
     try {
-      userResponse = await axios.get(`https://api.x.com/2/users?user.fields=profile_image_url&ids=1120065922092417025`, {
+      userResponse = await axios.get(`https://api.x.com/2/users?user.fields=profile_image_url&ids=${userid}`, {
         headers: { Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAJYt3wEAAAAATs%2BkSXmYPU%2B038cSrwTK904p1sw%3DGn31flGx8aZ2HDIEnRkha7M2t7Ah5dE1EFI2NLXBGysgHz05zQ` },
       });
     } catch (error) {
       if (error.response && error.response.status === 429) {
         const retryAfter = error.response.headers["retry-after"] || 60; // fallback 60 seconds
-        return res.status(429).send(`Rate limited by Twitter API. Please try again after ${retryAfter} seconds.`);
+        return res.status(429).send({error});
       } else {
         throw error;
       }
