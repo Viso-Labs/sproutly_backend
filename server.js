@@ -13,7 +13,6 @@ const SECRET = "YOUR_SECRET_KEY"; // Use a secure key for signing
 // Dummy base template path
 // Function to generate and sign ID
 
-
 app.get("/og/u/:signedId.png", async (req, res) => {
   const { signedId } = req.params;
 
@@ -22,14 +21,15 @@ app.get("/og/u/:signedId.png", async (req, res) => {
     const userid = parts[0];
     const imageid = parts[1];
 
-    const baseTemplatePath = path.join(__dirname, `/image/soulbond${imageid}.jpg`);
+    const baseTemplatePath = path.join(
+      __dirname,
+      `/image/soulbond${imageid}.jpg`
+    );
 
-    const userTwitterToken =
-      "AAAAAAAAAAAAAAAAAAAAAPHH3wEAAAAAAvyFKPSHTV5OcyP52oRf%2BaOrigQ%3DIe8xBhVcXopPZXVkC5xymkjUksZahfCrISXhw31EVTSeqzNCGR";
 
-    let userResponse;
+      let userResponse;
     try {
-      userResponse = await axios.get(`https://api.x.com/2/users?user.fields=profile_image_url&ids=${userid}`, {
+      userResponse = await axios.get(`https://api.x.com/2/users/${userid}?user.fields=profile_image_url`, {
         headers: { Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAPHH3wEAAAAAAvyFKPSHTV5OcyP52oRf%2BaOrigQ%3DIe8xBhVcXopPZXVkC5xymkjUksZahfCrISXhw31EVTSeqzNCGR` },
       });
     } catch (error) {
@@ -41,10 +41,15 @@ app.get("/og/u/:signedId.png", async (req, res) => {
       }
     }
 
-    const avatarUrl = userResponse.data.data.profile_image_url.replace("_normal", "_400x400");
+    const avatarUrl = userResponse.data.data.profile_image_url.replace(
+      "_normal",
+      "_400x400"
+    );
 
     // Fetch avatar image
-    const avatarResponse = await axios.get(avatarUrl, { responseType: "arraybuffer" });
+    const avatarResponse = await axios.get(avatarUrl, {
+      responseType: "arraybuffer",
+    });
     const avatarBuffer = Buffer.from(avatarResponse.data, "binary");
 
     // Load base template
